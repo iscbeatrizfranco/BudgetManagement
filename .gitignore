@@ -1,0 +1,39 @@
+# Build directories
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio files
+.vs/
+.vscode/
+
+# ASP.NET Core
+appsettings.Development.json
+
+# Logs
+*.log
+
+# NuGet packages
+*.nupkg
+packages/
+*.snupkg
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Node / npm (si tienes front-end)
+node_modules/
+
+# JetBrains Rider
+.idea/
+
+# Others
+*.pidb
+*.svd
+*.pdb
