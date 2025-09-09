@@ -1,14 +1,29 @@
+<<<<<<< Updated upstream
 # === Carpetas de compilación ===
 BudgetManagement/bin/
 BudgetManagement/obj/
 
 # === Visual Studio ===
 .vs/
+=======
+# Compilación
+bin/
+obj/
+out/
+[Bb]uild/
+[Bb]in/
+[Oo]bj/
+BudgetManagement/bin/
+
+# Configuración de usuario
+*.user
+>>>>>>> Stashed changes
 *.suo
 *.user
 *.userosscache
 *.sln.docstates
 
+<<<<<<< Updated upstream
 # === VS Code ===
 .vscode/
 
@@ -38,5 +53,42 @@ secrets.json
 appsettings.*.local.json
 
 # === Archivos del sistema operativo ===
+=======
+# Archivos temporales
+*.log
+*.tlog
+*.vspscc
+*.vssscc
+
+# Visual Studio
+.vs/
+*.dbmdl
+*.bak
+*.backup
+*.ldf
+*.mdf
+
+# Rider
+.idea/
+
+# Archivos generados por VS Code
+.vscode/
+
+# Paquetes
+*.nupkg
+*.snupkg
+packages/
+# (Los paquetes NuGet restaurables no se suben)
+
+# Publicación
+publish/
+*.Publish.xml
+
+# Archivos secretos (ajusta según tus necesidades)
+secrets.json
+appsettings.*.local.json
+
+# Otros
+>>>>>>> Stashed changes
 *.DS_Store
 Thumbs.db
