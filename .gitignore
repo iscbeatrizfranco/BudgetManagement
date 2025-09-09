@@ -1,39 +1,42 @@
-# Build directories
+# === Carpetas de compilación ===
 BudgetManagement/bin/
-obj/
+BudgetManagement/obj/
 
-# User-specific files
-*.user
+# === Visual Studio ===
+.vs/
 *.suo
+*.user
 *.userosscache
 *.sln.docstates
 
-# Visual Studio files
-.vs/
+# === VS Code ===
 .vscode/
 
-# ASP.NET Core
-appsettings.Development.json
+# === Archivos de compilación y publicación ===
+[Bb]in/
+[Oo]bj/
+out/
+publish/
+*.Publish.xml
 
-# Logs
-*.log
-
-# NuGet packages
+# === Paquetes NuGet ===
 *.nupkg
-packages/
 *.snupkg
+packages/
 
-# OS generated files
-.DS_Store
+# === Archivos de logs y temporales ===
+*.log
+*.tlog
+
+# === Base de datos local ===
+*.mdf
+*.ldf
+*.dbmdl
+
+# === Archivos secretos ===
+secrets.json
+appsettings.*.local.json
+
+# === Archivos del sistema operativo ===
+*.DS_Store
 Thumbs.db
-
-# Node / npm (si tienes front-end)
-node_modules/
-
-# JetBrains Rider
-.idea/
-
-# Others
-*.pidb
-*.svd
-*.pdb
