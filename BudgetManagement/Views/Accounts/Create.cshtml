@@ -1,0 +1,48 @@
+﻿@model AccountCreateViewModel
+@{
+    ViewData["Title"] = "Crear Cuenta";
+}
+
+<h1>Cuentas</h1>
+<h5>La cuenta se refiere a los distintos balances que tienes:
+    tarjetas de crédito, préstamos, cuenta de ahorro, etc.
+</h5>
+@{
+    if (Model is not null)
+    {
+        <form asp-controller="Accounts" asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger" ></div>
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="AccountTypeId" class="form-label"></label>
+                <select asp-for="AccountTypeId" asp-items="Model.AccountsTypes" class="form-control"></select>
+                <span asp-validation-for="AccountTypeId" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Balance" class="form-label"></label>
+                <input asp-for="Balance" class="form-control" />
+                <span asp-validation-for="Balance"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </form>
+    }
+    else
+    {
+        <h2>Error al cargar los tipos de cuentas</h2>    
+    }
+}
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+}
