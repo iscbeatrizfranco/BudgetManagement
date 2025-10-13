@@ -67,7 +67,15 @@
                         {
                             var classBalance = GetBalanceClass(account.Balance);
                             <li class="list-group-item">
-                                <span>@account.Name</span>
+                                <span>
+                                    @account.Name
+                                    <a class="btn btn-primary">
+                                        <i class="bi-pencil-fill"></i>
+                                    </a>
+                                    <a class="btn btn-danger">
+                                        <i class="bi-trash-fill"></i>
+                                    </a>
+                                </span>
                                 <span class="@classBalance">@FormatBalance(account.Balance)</span>
                             </li>  
                         }
