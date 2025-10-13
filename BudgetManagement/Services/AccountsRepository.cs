@@ -27,14 +27,15 @@ namespace BudgetManagement.Services
             account.Id = id;
         }
 
-        //public async Task<bool> ExistsAccount(string Name, int UserId)
-        //{
-        //    var connection = new SqlConnection(connectionString);
-        //    await connection.QueryFirstOrDefaultAsync<int>("SELECT 1 " +
-        //        "FROM Accounts " +
-        //        "WHERE Name = @Name " +
-        //        "AND ");
-        //    return 
-        //}
+        public async Task<IEnumerable<Account>> Search(int UserId)
+        {
+            using var connection = new SqlConnection(connectionString);
+            return await connection.QueryAsync<Account>("SELECT Accounts.Id, Accounts.Name, " +
+                                                        "Balance, at.Name AS AccountType " +
+                                                        "FROM Accounts INNER JOIN AccountsTypes at " +
+                                                        "ON at.Id = Accounts.AccountTypeId " +
+                                                        "WHERE at.UserId = @UserId " +
+                                                        "ORDER BY at.DisplayOrder", new { UserId });
+        }
     }
 }

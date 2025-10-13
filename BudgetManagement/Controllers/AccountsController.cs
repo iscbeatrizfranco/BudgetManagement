@@ -19,9 +19,21 @@ namespace BudgetManagement.Controllers
             this.usersService = usersService;
             this.accountsRepository = accountsRepository;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index() 
         {
-            return View();
+            var userId = usersService.GetUserID();
+            var accountsWithAccountType =  await accountsRepository.Search(userId);
+
+            var model = accountsWithAccountType.GroupBy(x => x.AccountType)
+                                               .Select(group => new AccountIndexViewModel
+                                               {
+                                                   AccountType = group.Key,
+                                                   Accounts = group.AsEnumerable()
+
+                                               }).ToList();
+            return View(model);
+
         }
 
         [HttpGet]
