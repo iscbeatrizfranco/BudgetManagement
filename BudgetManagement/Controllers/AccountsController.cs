@@ -64,6 +64,47 @@ namespace BudgetManagement.Controllers
 
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            var userId = usersService.GetUserID();
+            var account = await accountsRepository.GetById(id, userId);
+            if (account is null) 
+            {
+                return RedirectToAction("NoFound", "Home");
+            }
+
+            var model = new AccountCreateViewModel() { 
+                Id = account.Id,
+                Name = account.Name,
+                AccountTypeId = account.AccountTypeId,
+                Balance = account.Balance,
+                Description = account.Description
+            };
+            model.AccountsTypes = await GetAccountsTypes(userId);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(AccountCreateViewModel accountEdit) 
+        {
+            var userId = usersService.GetUserID();
+
+            var account = accountsRepository.GetById(accountEdit.Id, userId);
+            if (account is null) 
+            {
+                return RedirectToAction("NoFound", "Home");
+            }
+            
+            var accountTypes = await accountsTypesRepository.GetById(accountEdit.AccountTypeId, userId);
+            if (accountTypes is null) 
+            {
+                return RedirectToAction("NoFound","Home");
+            }
+
+            await accountsRepository.Update(accountEdit);
+            return RedirectToAction("Index");
+        }
+
         private async Task<IEnumerable<SelectListItem>> GetAccountsTypes(int userId) 
         {
             var accountsTypes = await accountsTypesRepository.GetAll(userId);

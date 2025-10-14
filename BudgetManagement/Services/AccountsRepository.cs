@@ -20,10 +20,10 @@ namespace BudgetManagement.Services
         {
             using var connection = new SqlConnection(connectionString);
             var id = await connection.QuerySingleAsync<int>("INSERT INTO Accounts " +
-                                                    "(Name, AccountTypeId, Balance, Description) " +
-                                                    "VALUES (@Name, @AccountTypeId, @Balance, @Description) " +
-                                                    "SELECT SCOPE_IDENTITY()",
-                                                    account);
+                                                            "(Name, AccountTypeId, Balance, Description) " +
+                                                            "VALUES (@Name, @AccountTypeId, @Balance, @Description) " +
+                                                            "SELECT SCOPE_IDENTITY()",
+                                                            account);
             account.Id = id;
         }
 
@@ -32,10 +32,30 @@ namespace BudgetManagement.Services
             using var connection = new SqlConnection(connectionString);
             return await connection.QueryAsync<Account>("SELECT Accounts.Id, Accounts.Name, " +
                                                         "Balance, at.Name AS AccountType " +
-                                                        "FROM Accounts INNER JOIN AccountsTypes at " +
+                                                        "FROM Accounts " +
+                                                        "INNER JOIN AccountsTypes at " +
                                                         "ON at.Id = Accounts.AccountTypeId " +
                                                         "WHERE at.UserId = @UserId " +
                                                         "ORDER BY at.DisplayOrder", new { UserId });
+        }
+
+        public async Task<Account> GetById(int Id, int UserId) 
+        {
+            using var connection = new SqlConnection(connectionString);
+            return await connection.QueryFirstOrDefaultAsync <Account>("SELECT Accounts.Id, Accounts.Name, " +
+                                                                        "Balance, AccountTypeId,Description " +
+                                                                        "FROM Accounts " +
+                                                                        "INNER JOIN AccountsTypes at " +
+                                                                        "ON at.Id = Accounts.AccountTypeId " +
+                                                                        "WHERE at.UserId = @UserId " +
+                                                                        "AND Accounts.Id = @Id", new { Id, UserId});
+        }
+
+        public async Task Update(AccountCreateViewModel account) 
+        {
+            using var connection = new SqlConnection(connectionString);
+            await connection.ExecuteAsync("UPDATE Accounts SET Name = @Name, AccountTypeId = @AccountTypeId," +
+                                           " Balance = @Balance, Description = @Description WHERE Id = @id",account);
         }
     }
 }
