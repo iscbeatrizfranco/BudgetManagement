@@ -37,8 +37,12 @@
         <div>
             <strong>Total</strong>
         </div>
-        <div>
-            @FormatBalance(Model.Sum(x => x.Balance))
+        @{
+            var total = Model.Sum(x => x.Balance);
+            var classTotal = GetBalanceClass(total);
+        }
+        <div class="@classTotal">
+            @FormatBalance(total)
         </div>
     </div>
 </div>
