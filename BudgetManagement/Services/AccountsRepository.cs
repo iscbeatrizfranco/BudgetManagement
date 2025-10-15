@@ -27,7 +27,7 @@ namespace BudgetManagement.Services
             account.Id = id;
         }
 
-        public async Task<IEnumerable<Account>> Search(int UserId)
+        public async Task<IEnumerable<Account>> Search(int userId)
         {
             using var connection = new SqlConnection(connectionString);
             return await connection.QueryAsync<Account>("SELECT Accounts.Id, Accounts.Name, " +
@@ -36,10 +36,10 @@ namespace BudgetManagement.Services
                                                         "INNER JOIN AccountsTypes at " +
                                                         "ON at.Id = Accounts.AccountTypeId " +
                                                         "WHERE at.UserId = @UserId " +
-                                                        "ORDER BY at.DisplayOrder", new { UserId });
+                                                        "ORDER BY at.DisplayOrder", new { userId });
         }
 
-        public async Task<Account> GetById(int Id, int UserId) 
+        public async Task<Account> GetById(int id, int userId) 
         {
             using var connection = new SqlConnection(connectionString);
             return await connection.QueryFirstOrDefaultAsync <Account>("SELECT Accounts.Id, Accounts.Name, " +
@@ -48,7 +48,7 @@ namespace BudgetManagement.Services
                                                                         "INNER JOIN AccountsTypes at " +
                                                                         "ON at.Id = Accounts.AccountTypeId " +
                                                                         "WHERE at.UserId = @UserId " +
-                                                                        "AND Accounts.Id = @Id", new { Id, UserId});
+                                                                        "AND Accounts.Id = @Id", new { id, userId});
         }
 
         public async Task Update(AccountCreateViewModel account) 
@@ -56,6 +56,12 @@ namespace BudgetManagement.Services
             using var connection = new SqlConnection(connectionString);
             await connection.ExecuteAsync("UPDATE Accounts SET Name = @Name, AccountTypeId = @AccountTypeId," +
                                            " Balance = @Balance, Description = @Description WHERE Id = @id",account);
+        }
+
+        public async Task Delete(int id) 
+        {
+            using var connection = new SqlConnection(connectionString);
+            await connection.ExecuteAsync("DELETE FROM Accounts WHERE Id = @id", new { id});
         }
     }
 }
