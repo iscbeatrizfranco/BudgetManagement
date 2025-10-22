@@ -120,6 +120,20 @@ namespace BudgetManagement.Controllers
             return View(account);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteAccount(int id) 
+        {
+            var userId = usersService.GetUserID();
+            var account = await accountsRepository.GetById(id, userId);
+            if (account is null)
+            {
+                return RedirectToAction("NoFound", "Home");
+            }
+
+            await accountsRepository.Delete(id);
+            return RedirectToAction("Index");
+        }
+
         private async Task<IEnumerable<SelectListItem>> GetAccountsTypes(int userId) 
         {
             var accountsTypes = await accountsTypesRepository.GetAll(userId);

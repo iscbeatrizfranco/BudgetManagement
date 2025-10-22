@@ -9,6 +9,7 @@ builder.Services.AddTransient<IAccountsTypesRepository, AccountsTypesRepository>
 builder.Services.AddTransient<IUsersService, UsersService>();
 builder.Services.AddTransient<IAccountsRepository, AccountsRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddTransient<ICategoriesRepository, CategoriesRepository>();
 
 
 var app = builder.Build();

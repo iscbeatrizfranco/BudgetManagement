@@ -1,0 +1,30 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crear categoria</h1>
+<h5>
+    La categoria se refiere a cómo podemos agrupar transacciones.
+    Ejemplos: Supermecado, Hobbies, etc.
+</h5>
+<div>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="TransactionTypeId"></label>
+            <select class="form-select" asp-for="TransactionTypeId" asp-items="Html.GetEnumSelectList<TransactionType>()"></select>
+            <span asp-validation-for="TransactionTypeId" class="text-danger"></span>
+        </div>
+        <button class="btn btn-primary">Enviar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"></partial>
+}
