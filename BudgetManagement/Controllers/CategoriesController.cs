@@ -46,5 +46,19 @@ namespace BudgetManagement.Controllers
             await categoriesRepository.Create(category);
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Edit(Category category)
+        {
+            return View(category);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Category category)
+        {
+            if (!ModelState.IsValid) 
+            {
+                //return 
+            }
+        }
     }
 }

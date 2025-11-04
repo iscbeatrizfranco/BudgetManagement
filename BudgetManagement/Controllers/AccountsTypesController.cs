@@ -63,7 +63,7 @@ namespace BudgetManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(AccountType accountType) 
+        public async Task<IActionResult> Edit(AccountType accountType) 
         {
             var userId = usersService.GetUserID();
             var accountTypeExists = await accountsTypesRepository.GetById(accountType.Id, userId);
