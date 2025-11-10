@@ -42,7 +42,7 @@ namespace BudgetManagement.Services
         public async Task<IEnumerable<Category>> Get(int userId)
         {
             var connection = new SqlConnection(connectionString);
-            var categories = await connection.QueryAsync<Category>("SELECT Name, TransactionTypeId " +
+            var categories = await connection.QueryAsync<Category>("SELECT Id, Name, TransactionTypeId " +
                                                                     "FROM Categories " +
                                                                     "WHERE UserId = @userId",
                                                                     new { userId });
@@ -62,8 +62,14 @@ namespace BudgetManagement.Services
         public async Task Update(Category category) 
         {
             var connection = new SqlConnection(connectionString);
-            await connection.ExecuteAsync("UPDATE Categories SET Name = @Name, TransactionTypeId = @TransactionTypeId" +
-                                            "WHERE Id=1", category);
+            await connection.ExecuteAsync("UPDATE Categories SET Name = @Name, TransactionTypeId = @TransactionTypeId " +
+                                            "WHERE Id=@Id", category);
+        }
+
+        public async Task Delete(int id) 
+        {
+            var connection = new SqlConnection(connectionString);
+            await connection.ExecuteAsync("DELETE FROM Categories WHERE Id = @id", new { id});
         }
     }
 

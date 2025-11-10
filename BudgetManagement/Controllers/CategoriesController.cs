@@ -47,18 +47,59 @@ namespace BudgetManagement.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Edit(Category category)
+        public async Task<IActionResult> Edit(int id)
         {
+            var userId = usersService.GetUserID();
+            var category = await categoriesRepository.GetById(id,userId);
+            if (category is null) 
+            {
+                return RedirectToAction("NoFound","Home");
+            }
             return View(category);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Category category)
+        public async Task<IActionResult> Edit(Category categoryEdit)
         {
             if (!ModelState.IsValid) 
             {
-                //return 
+                return View(categoryEdit); 
             }
+
+            var userId = usersService.GetUserID();
+            var category = await categoriesRepository.GetById(categoryEdit.Id, userId);
+            if (category is null)
+            {
+                return RedirectToAction("NoFound", "Home");
+            }
+            categoryEdit.UserId = userId;
+            await categoriesRepository.Update(categoryEdit);
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Delete(int id) 
+        {
+            var userId = usersService.GetUserID();
+            var category = await categoriesRepository.GetById(id, userId);
+            if (category is null) 
+            {
+                return RedirectToAction("NoFound","Home");
+            }
+            return View(category);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Category categoryDelete) 
+        {
+            var userId = usersService.GetUserID();
+            var category = await categoriesRepository.GetById(categoryDelete.Id, userId);
+            if (category is null) 
+            {
+                return RedirectToAction("NoFound", "Home");
+            }
+            await categoriesRepository.Delete(categoryDelete.Id);
+            return RedirectToAction("Index");
         }
     }
 }
